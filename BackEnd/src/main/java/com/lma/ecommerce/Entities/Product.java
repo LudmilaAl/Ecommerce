@@ -2,45 +2,47 @@ package com.lma.ecommerce.Entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
 public class Product {
 
     //Attributes
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank
-    @Size(max = 100)
     private String name;
 
-    @NotBlank
-    @ManyToOne
-    @JoinColumn( name = "brand_id", referencedColumnName = "id")
     private String brand;
 
-    @NotBlank
-    @ManyToOne
-    @JoinColumn( name = "category_id", referencedColumnName = "id")
-    private Category category;
+    @NotNull
+    private String category;
+
+    private String description;
 
     private String imageURL;
 
-    @NotBlank
     private float price;
 
-    @Size(max = 250)
-    private String description;
+    @NotNull
+    private Integer stock;
 
-    @NotBlank
-    private Long stock;
-
-
-
-    //Constructor
+    //Constructors
     public Product() {
+    }
+
+    public Product(String name, String brand, String category, String description, String imageURL, float price, Integer stock) {
+        this.name = name;
+        this.brand = brand;
+        this.category = category;
+        this.description = description;
+        this.imageURL = imageURL;
+        this.price = price;
+        this.stock = stock;
     }
 
     //Getters and setters
@@ -69,12 +71,20 @@ public class Product {
         this.brand = brand;
     }
 
-    public Category getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getImageURL() {
@@ -93,35 +103,11 @@ public class Product {
         this.price = price;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Long getStock() {
+    public Integer getStock() {
         return stock;
     }
 
-    public void setStock(Long stock) {
+    public void setStock(Integer stock) {
         this.stock = stock;
-    }
-
-
-    //ToString
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", brand='" + brand + '\'' +
-                ", category=" + category +
-                ", imageURL='" + imageURL + '\'' +
-                ", price=" + price +
-                ", description='" + description + '\'' +
-                ", stock=" + stock +
-                '}';
     }
 }
